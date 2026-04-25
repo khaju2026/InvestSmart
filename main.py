@@ -3,9 +3,12 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 from backend.dashboard import gerar_dashboard_html, gerar_dashboard_todos, TICKERS_BR, gerar_home_html
-from backend.database import SessionLocal
+from backend.database import SessionLocal, engine
 from backend.crud import get_usuario_by_email, get_usuario_by_cpf, verify_password, create_usuario, create_consulta
-from backend import schemas
+from backend import schemas, models
+
+# Cria as tabelas no banco de dados, caso não existam
+models.Base.metadata.create_all(bind=engine)
 import os
 from datetime import date
 
