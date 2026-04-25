@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>InvestSmart - Página Inicial</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img src="/static/logo.png" class="logo" alt="InvestSmart Logo">
+        <h1>Bem-vindo ao InvestSmart</h1>
+    </header>
+    <div class="container">
+        <h2>Indicadores de Mercado</h2>
+        <p><strong>IBOV:</strong> {{ ibov }}</p>
+        <p><strong>Dólar:</strong> {{ dolar }}</p>
+        <p><strong>S&P500:</strong> {{ sp500 }}</p>
+        <button onclick="window.location.href='/consultas'">Ir para Consultas</button>
+        <button onclick="window.location.href='/dashboard'">Dashboard</button>
+    </div>
+    <footer>
+        InvestSmart © 2026 – Seu painel financeiro inteligente
+    </footer>
+</body>
+</html>

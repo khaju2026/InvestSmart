@@ -1,0 +1,7 @@
+Tecnicamente, o que falta agora é:
+
+Proteger as rotas para que só usuários autenticados acessem.
+
+Melhorar a experiência visual (responsividade e design).
+
+Adicionar persistência real (banco de dados) para usuários e consultas.

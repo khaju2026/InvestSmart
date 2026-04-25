@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultas Financeiras</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <header>
+    <h2>Consultas Financeiras</h2>
+</header>
+
+    <div class="container">
+        <form method="post" action="/consultar">
+            <label><input type="checkbox" name="ativos" value="IBOV"> IBOV</label>
+            <label><input type="checkbox" name="ativos" value="DOLAR"> Dólar</label>
+            <label><input type="checkbox" name="ativos" value="SP500"> S&P500</label>
+            <label><input type="checkbox" name="ativos" value="PETR4"> PETR4</label>
+            <label><input type="checkbox" name="ativos" value="VALE3"> VALE3</label>
+            <label><input type="checkbox" name="ativos" value="ITUB4"> ITUB4</label>
+            <br>
+            <button type="submit">Consultar</button>
+        </form>
+        <button onclick="window.location.href='/dashboard'">Dashboard</button>
+        <button class="back-btn" onclick="window.location.href='/home'">Voltar</button>
+    </div>
+</body>
+</html>

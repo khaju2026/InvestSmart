@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}InvestSmart{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', path='logo.png') }}" class="logo" alt="InvestSmart Logo">
+        <h1>InvestSmart</h1>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        InvestSmart © 2026 – Seu painel financeiro inteligente
+    </footer>
+</body>
+</html>

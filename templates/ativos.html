@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>InvestSmart - Ativos</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img src="/static/logo.png" class="logo" alt="InvestSmart Logo">
+        <h2>Consulta de Ativos</h2>
+    </header>
+    <div class="container">
+        <form method="post" action="/consultar">
+            <label for="ativo">Digite o código do ativo:</label>
+            <input type="text" id="ativo" name="ativo" required>
+            <button type="submit">Consultar</button>
+        </form>
+        <button onclick="window.location.href='/dashboard'">Dashboard</button>
+    </div>
+</body>
+</html>

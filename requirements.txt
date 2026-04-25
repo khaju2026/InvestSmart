@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+starlette
+yfinance
+plotly
+pandas
+openpyxl
+itsdangerous
+requests
+feedparser
+sqlalchemy
+passlib[bcrypt]
+python-multipart
+alembic
