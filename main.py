@@ -90,6 +90,10 @@ def register_post(request: Request, nome: str = Form(...), cpf: str = Form(...),
         # Loga automaticamente após registro
         request.session["usuario_id"] = usuario_criado.id
         return RedirectResponse(url="/home", status_code=303)
+    except Exception as e:
+        import traceback
+        erro = traceback.format_exc()
+        return HTMLResponse(f"<h3>Erro Interno do Servidor (500)</h3><pre>{erro}</pre>")
     finally:
         db.close()
 
