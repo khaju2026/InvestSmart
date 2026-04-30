@@ -107,12 +107,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
     """
 
 def gerar_dashboard_todos(ativos, periodo="30d"):
-    # To fix this function properly, we must loop over "ativos" to generate graphics, or just generate one combined graph
-    # Wait, the current implementation of dashboard_all passes multiple ativos to gerar_dashboard_todos but it was incomplete.
-    # Let's fix it by generating a combined chart or multiple charts.
-    
-    # Simple fix: generate a basic combined line chart using HTML string formatting
-    dados_combinados = {{}}
+    dados_combinados = {}
     for ativo in ativos:
         try:
             dados_combinados[ativo] = obter_dados_mercado(ativo, periodo)
