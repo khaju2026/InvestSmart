@@ -121,6 +121,7 @@ main.container {
     padding: 3rem;
     width: 100%;
     max-width: 650px;
+    box-sizing: border-box;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
 }
@@ -141,6 +142,7 @@ main.container {
 
 .card-grid .card {
     padding: 2rem;
+    max-width: none;
 }
 
 .card-grid .card h2 {

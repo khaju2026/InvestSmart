@@ -207,10 +207,19 @@ def dashboard_all(request: Request, ativos: list[str] = Query(default=[]), perio
             usuario_id=request.session["usuario_id"]
         )
         create_consulta(db, nova_consulta, request.session["usuario_id"])
+    except Exception as e:
+        import traceback
+        erro = traceback.format_exc()
+        return HTMLResponse(f"<h3>Erro Interno do Servidor (500)</h3><pre>Erro no BD: {erro}</pre>")
     finally:
         db.close()
 
-    return HTMLResponse(gerar_dashboard_todos(ativos, periodo))
+    try:
+        return HTMLResponse(gerar_dashboard_todos(ativos, periodo))
+    except Exception as e:
+        import traceback
+        erro = traceback.format_exc()
+        return HTMLResponse(f"<h3>Erro Interno do Servidor (500)</h3><pre>Erro ao gerar gráficos: {erro}</pre>")
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request, ativo: str = Query(default="^BVSP"), periodo: str = Query(default="30d")):
@@ -227,7 +236,16 @@ def dashboard(request: Request, ativo: str = Query(default="^BVSP"), periodo: st
             usuario_id=request.session["usuario_id"]
         )
         create_consulta(db, nova_consulta, request.session["usuario_id"])
+    except Exception as e:
+        import traceback
+        erro = traceback.format_exc()
+        return HTMLResponse(f"<h3>Erro Interno do Servidor (500)</h3><pre>Erro no BD: {erro}</pre>")
     finally:
         db.close()
 
-    return HTMLResponse(gerar_dashboard_html(ativo, periodo))
+    try:
+        return HTMLResponse(gerar_dashboard_html(ativo, periodo))
+    except Exception as e:
+        import traceback
+        erro = traceback.format_exc()
+        return HTMLResponse(f"<h3>Erro Interno do Servidor (500)</h3><pre>Erro ao gerar gráfico: {erro}</pre>")
