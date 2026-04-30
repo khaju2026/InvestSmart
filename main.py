@@ -6,6 +6,7 @@ from backend.dashboard import gerar_dashboard_html, gerar_dashboard_todos, TICKE
 from backend.database import SessionLocal, engine
 from backend.crud import get_usuario_by_email, get_usuario_by_cpf, verify_password, create_usuario, create_consulta
 from backend import schemas, models
+import traceback
 
 # Cria as tabelas no banco de dados, caso não existam
 models.Base.metadata.create_all(bind=engine)
@@ -13,6 +14,12 @@ import os
 from datetime import date
 
 app = FastAPI()
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    erro = traceback.format_exc()
+    return HTMLResponse(content=f"<h3>Erro Crítico (500)</h3><pre>{erro}</pre>", status_code=500)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(SessionMiddleware, secret_key="chave_super_secreta")
 
