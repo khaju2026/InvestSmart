@@ -23,6 +23,11 @@ def obter_dados_mercado(ativo, periodo="30d"):
         inicio = hoje - datetime.timedelta(days=30)
     try:
         dados = yf.download(ativo, start=inicio, end=hoje)
+        if isinstance(dados.columns, pd.MultiIndex):
+            dados.columns = dados.columns.get_level_values(0)
+        
+        # Garantir que se houver colunas duplicadas (ex: mais de um ativo), pegamos apenas a primeira
+        dados = dados.loc[:, ~dados.columns.duplicated()]
         return dados[["Open", "High", "Low", "Close"]].dropna()
     except Exception:
         datas = pd.date_range(start=inicio, end=hoje)
