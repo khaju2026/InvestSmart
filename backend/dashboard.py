@@ -23,25 +23,37 @@ def obter_dados_mercado(ativo, periodo="30d"):
         inicio = hoje - datetime.timedelta(days=30)
     try:
         dados = yf.download(ativo, start=inicio, end=hoje)
-        return dados["Close"].dropna()
+        return dados[["Open", "High", "Low", "Close"]].dropna()
     except Exception:
         datas = pd.date_range(start=inicio, end=hoje)
-        valores = [100 + i*0.5 for i in range(len(datas))]
-        return pd.Series(valores, index=datas)
+        df = pd.DataFrame(index=datas)
+        df["Open"] = [100 + i*0.5 for i in range(len(datas))]
+        df["High"] = df["Open"] + 2
+        df["Low"] = df["Open"] - 2
+        df["Close"] = df["Open"] + 1
+        return df
 
 def gerar_grafico_interativo(dados, titulo):
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=dados.index, y=dados.values, mode="lines", name="Preço"))
+    fig.add_trace(go.Candlestick(
+        x=dados.index,
+        open=dados['Open'],
+        high=dados['High'],
+        low=dados['Low'],
+        close=dados['Close'],
+        name="Preço"
+    ))
     if len(dados) > 7:
-        fig.add_trace(go.Scatter(x=dados.index, y=dados.rolling(7).mean(), mode="lines", name="MM 7d"))
+        fig.add_trace(go.Scatter(x=dados.index, y=dados['Close'].rolling(7).mean(), mode="lines", name="MM 7d", line=dict(color='rgba(255, 165, 0, 0.7)')))
     if len(dados) > 21:
-        fig.add_trace(go.Scatter(x=dados.index, y=dados.rolling(21).mean(), mode="lines", name="MM 21d"))
+        fig.add_trace(go.Scatter(x=dados.index, y=dados['Close'].rolling(21).mean(), mode="lines", name="MM 21d", line=dict(color='rgba(0, 191, 255, 0.7)')))
     fig.update_layout(
         title=titulo,
         xaxis_title="Data",
         yaxis_title="Preço",
         template="plotly_dark",
-        height=300   # controla altura do gráfico
+        height=400,
+        xaxis_rangeslider_visible=False
     )
     return fig.to_html(full_html=False)
 
@@ -116,7 +128,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
 
     fig = go.Figure()
     for ativo, dados in dados_combinados.items():
-        fig.add_trace(go.Scatter(x=dados.index, y=dados.values, mode="lines", name=ativo))
+        fig.add_trace(go.Scatter(x=dados.index, y=dados['Close'], mode="lines", name=ativo))
     
     fig.update_layout(
         title="Comparativo de Ativos",
@@ -168,7 +180,7 @@ def gerar_home_html():
     cards = ""
     for nome, ticker in indices.items():
         dados = obter_dados_mercado(ticker, "7d")
-        ultimo = round(dados.iloc[-1], 2)
+        ultimo = round(dados['Close'].iloc[-1], 2)
         cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: {ultimo}</p></div>"
     return f"""
     <html>
