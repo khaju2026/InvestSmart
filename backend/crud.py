@@ -109,8 +109,11 @@ def gerar_relatorio_carteira(db: Session, usuario_id: int):
         if data['quantidade'] > 0:
             try:
                 df = obter_dados_mercado(data['nome'], "7d")
-                preco_atual = df['Close'].iloc[-1]
-            except:
+                if df is None or df.empty:
+                    preco_atual = data['preco_medio']
+                else:
+                    preco_atual = df['Close'].iloc[-1]
+            except Exception:
                 preco_atual = data['preco_medio']
             
             saldo_atual += data['quantidade'] * preco_atual

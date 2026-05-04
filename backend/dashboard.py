@@ -186,9 +186,15 @@ def gerar_home_html():
     }
     cards = ""
     for nome, ticker in indices.items():
-        dados = obter_dados_mercado(ticker, "7d")
-        ultimo = round(dados['Close'].iloc[-1], 2)
-        cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: {ultimo}</p></div>"
+        try:
+            dados = obter_dados_mercado(ticker, "7d")
+            if dados.empty:
+                ultimo = 0.0
+            else:
+                ultimo = round(dados['Close'].iloc[-1], 2)
+            cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: {ultimo}</p></div>"
+        except Exception:
+            cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: Indisponível</p></div>"
     return f"""
     <html>
     <head>
