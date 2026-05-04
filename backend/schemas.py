@@ -57,3 +57,11 @@ class Consulta(ConsultaBase):
     usuario_id: int
     class Config:
         from_attributes = True
+
+class RelatorioCarteira(BaseModel):
+    total_investido: float
+    saldo_atual: float
+    rentabilidade: float
+    quantidade_transacoes: int
+    investimentos: list[Investimento]
+    darf: float = 0.0

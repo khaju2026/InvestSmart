@@ -60,7 +60,7 @@ def gerar_grafico_interativo(dados, titulo):
         height=400,
         xaxis_rangeslider_visible=False
     )
-    return fig.to_html(full_html=False)
+    return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 def exportar_pdf(dados, ativo):
     if isinstance(dados, pd.Series):
@@ -100,6 +100,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
         <h1>InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
+            <a href="/carteira">Carteira</a>
             <a href="/consultas">Consultas</a>
             <a href="/logout">Sair</a>
         </nav>
@@ -142,7 +143,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         template="plotly_dark",
         height=400
     )
-    grafico_html = fig.to_html(full_html=False)
+    grafico_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
 
     html = f"""
     <html>
@@ -156,6 +157,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         <h1>InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
+            <a href="/carteira">Carteira</a>
             <a href="/consultas">Consultas</a>
             <a href="/logout">Sair</a>
         </nav>
@@ -198,6 +200,8 @@ def gerar_home_html():
         <header>
             <h1>InvestSmart</h1>
             <nav>
+                <a href="/carteira">Carteira</a>
+                <a href="/carteira">Carteira</a>
                 <a href="/consultas">Nova Consulta</a>
                 <a href="/logout">Sair</a>
             </nav>

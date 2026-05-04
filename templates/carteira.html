@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Carteira - InvestSmart</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>InvestSmart</h1>
+        <nav>
+            <a href="/home">Home</a>
+            <a href="/carteira">Carteira</a>
+            <a href="/consultas">Consultas</a>
+            <a href="/logout">Sair</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Minha Carteira de Investimentos</h2>
+        
+        {error_alert}
+        
+        <div class="card-grid">
+            <div class="card">
+                <h3>Total Investido</h3>
+                <p style="font-size: 1.5rem; color: var(--text-color);">{total_investido}</p>
+            </div>
+            <div class="card">
+                <h3>Saldo Atual</h3>
+                <p style="font-size: 1.5rem; color: var(--primary-color);">{saldo_atual}</p>
+            </div>
+            <div class="card">
+                <h3>Rentabilidade</h3>
+                <p style="font-size: 1.5rem; color: var(--success-color);">{rentabilidade}</p>
+            </div>
+        </div>
+
+        <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 2rem;">
+            <div class="card">
+                <h3>Nova Transação</h3>
+                <form action="/investir" method="post" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                    <label>Ativo (Ticker):
+                        <input type="text" name="ativo" placeholder="Ex: PETR4.SA" required>
+                    </label>
+                    <div style="display: flex; gap: 1rem;">
+                        <label style="flex: 1;">Tipo:
+                            <select name="tipo" required>
+                                <option value="compra">Compra</option>
+                                <option value="venda">Venda</option>
+                            </select>
+                        </label>
+                        <label style="flex: 1;">Quantidade:
+                            <input type="number" name="quantidade" min="1" step="1" required>
+                        </label>
+                    </div>
+                    <label>Preço Unitário (R$):
+                        <input type="number" name="preco" min="0.01" step="0.01" required>
+                    </label>
+                    <button type="submit" class="btn">Registrar Transação</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Emissão de DARF (Imposto Devido)</h3>
+                <p>O imposto de renda sobre operações comuns (Swing Trade) é de 15% sobre o lucro líquido das vendas. O DARF deve ser pago até o último dia útil do mês subsequente.</p>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; text-align: center; background: rgba(255, 255, 255, 0.05);">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--text-color);">Valor do DARF a Pagar:</h4>
+                    <p style="font-size: 2rem; color: #ff4d4d; font-weight: bold; margin-bottom: 1rem;">{darf}</p>
+                    <button class="btn secondary" onclick="alert('Funcionalidade de geração de PDF do DARF em desenvolvimento.')">Gerar Guia PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 2rem; color: var(--primary-color);">Ativos em Custódia</h3>
+        <div class="card" style="padding: 0; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <th style="padding: 1rem;">Ativo</th>
+                        <th style="padding: 1rem;">Quantidade Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {investimentos_rows}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

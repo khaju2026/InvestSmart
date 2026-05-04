@@ -138,6 +138,79 @@ def home_page(request: Request):
         return RedirectResponse(url="/login", status_code=303)
     return HTMLResponse(gerar_home_html())
 
+@app.get("/carteira", response_class=HTMLResponse)
+def carteira(request: Request):
+    if not verificar_login(request):
+        return RedirectResponse(url="/login", status_code=303)
+    
+    db = SessionLocal()
+    try:
+        from backend.crud import gerar_relatorio_carteira
+        from backend.dashboard import TICKERS_BR
+        relatorio = gerar_relatorio_carteira(db, request.session["usuario_id"])
+        
+        # Load the carteira.html template
+        template_path = os.path.join(os.path.dirname(__file__), "templates", "carteira.html")
+        with open(template_path, "r", encoding="utf-8") as f:
+            template = f.read()
+            
+        # Format the investiments list
+        inv_html = ""
+        for inv in relatorio.investimentos:
+            inv_html += f"<tr><td style='padding:1rem;'>{inv.nome}</td><td style='padding:1rem;'>{inv.valor}</td></tr>"
+            
+        # Replace variables
+        error_msg = request.session.pop("error", None)
+        error_alert = f"<p style='color: #ff4d4d; margin-bottom: 1rem;'>{error_msg}</p>" if error_msg else ""
+        
+        html_content = template.format(
+            total_investido=f"R$ {relatorio.total_investido:.2f}",
+            saldo_atual=f"R$ {relatorio.saldo_atual:.2f}",
+            rentabilidade=f"{relatorio.rentabilidade:.2f}%",
+            darf=f"R$ {relatorio.darf:.2f}",
+            investimentos_rows=inv_html,
+            error_alert=error_alert
+        )
+        return HTMLResponse(html_content)
+    finally:
+        db.close()
+
+@app.post("/investir", response_class=HTMLResponse)
+def investir_post(request: Request, ativo: str = Form(...), quantidade: int = Form(...), preco: float = Form(...), tipo: str = Form(...)):
+    if not verificar_login(request):
+        return RedirectResponse(url="/login", status_code=303)
+        
+    db = SessionLocal()
+    try:
+        from backend.crud import create_transacao
+        from backend.models import Investimento
+        usuario_id = request.session["usuario_id"]
+        
+        # Verify if Investimento exists
+        inv = db.query(Investimento).filter(Investimento.nome == ativo, Investimento.usuario_id == usuario_id).first()
+        if not inv:
+            from backend.crud import create_investimento
+            from backend.schemas import InvestimentoCreate
+            inv = create_investimento(db, InvestimentoCreate(nome=ativo, valor=0.0, usuario_id=usuario_id), usuario_id)
+            
+        if tipo == "venda" and inv.valor < quantidade:
+            request.session["error"] = "Quantidade de venda maior que o saldo na carteira!"
+            return RedirectResponse(url="/carteira", status_code=303)
+            
+        nova_transacao = schemas.TransacaoCreate(
+            tipo=tipo,
+            quantidade=quantidade,
+            preco=preco,
+            data=date.today(),
+            investimento_id=inv.id,
+            usuario_id=usuario_id
+        )
+        create_transacao(db, nova_transacao, usuario_id)
+        
+        return RedirectResponse(url="/carteira", status_code=303)
+    finally:
+        db.close()
+
 @app.get("/consultas", response_class=HTMLResponse)
 def consultas(request: Request):
     if not verificar_login(request):
