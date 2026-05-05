@@ -27,6 +27,16 @@ def create_usuario(db: Session, usuario: schemas.UsuarioCreate):
     db.add(novo_usuario)
     db.commit()
     db.refresh(novo_usuario)
+
+    # Injetar saldo fictício para testes
+    saldo_teste = models.Investimento(
+        nome="SALDO_EM_CAIXA",
+        valor=10000.0,
+        usuario_id=novo_usuario.id
+    )
+    db.add(saldo_teste)
+    db.commit()
+
     return novo_usuario
 
 # Investimentos

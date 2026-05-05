@@ -186,16 +186,32 @@ def investir_post(request: Request, ativo: str = Form(...), quantidade: int = Fo
         from backend.models import Investimento
         usuario_id = request.session["usuario_id"]
         
+        # Locate the cash balance
+        caixa = db.query(Investimento).filter(Investimento.nome == "SALDO_EM_CAIXA", Investimento.usuario_id == usuario_id).first()
+        if not caixa:
+            caixa = Investimento(nome="SALDO_EM_CAIXA", valor=0.0, usuario_id=usuario_id)
+            db.add(caixa)
+
+        valor_transacao = quantidade * preco
+
         # Verify if Investimento exists
         inv = db.query(Investimento).filter(Investimento.nome == ativo, Investimento.usuario_id == usuario_id).first()
+
+        if tipo == "venda":
+            if not inv or inv.valor < quantidade:
+                request.session["error"] = "Quantidade de venda maior que o estoque na carteira!"
+                return RedirectResponse(url="/carteira", status_code=303)
+            caixa.valor += valor_transacao
+        elif tipo == "compra":
+            if caixa.valor < valor_transacao:
+                request.session["error"] = "Saldo insuficiente no CAIXA para realizar a compra!"
+                return RedirectResponse(url="/carteira", status_code=303)
+            caixa.valor -= valor_transacao
+
         if not inv:
             from backend.crud import create_investimento
             from backend.schemas import InvestimentoCreate
             inv = create_investimento(db, InvestimentoCreate(nome=ativo, valor=0.0, usuario_id=usuario_id), usuario_id)
-            
-        if tipo == "venda" and inv.valor < quantidade:
-            request.session["error"] = "Quantidade de venda maior que o saldo na carteira!"
-            return RedirectResponse(url="/carteira", status_code=303)
             
         nova_transacao = schemas.TransacaoCreate(
             tipo=tipo,
@@ -207,6 +223,9 @@ def investir_post(request: Request, ativo: str = Form(...), quantidade: int = Fo
         )
         create_transacao(db, nova_transacao, usuario_id)
         
+        # O commit principal da caixa
+        db.commit()
+
         return RedirectResponse(url="/carteira", status_code=303)
     finally:
         db.close()

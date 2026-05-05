@@ -188,11 +188,22 @@ def gerar_home_html():
     for nome, ticker in indices.items():
         try:
             dados = obter_dados_mercado(ticker, "7d")
-            if dados.empty:
+            if dados is None or dados.empty:
                 ultimo = 0.0
+                grafico_html = ""
             else:
                 ultimo = round(dados['Close'].iloc[-1], 2)
-            cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: {ultimo}</p></div>"
+                # Criar mini gráfico
+                import plotly.graph_objects as go
+                fig = go.Figure(go.Scatter(x=dados.index, y=dados['Close'], mode='lines', line=dict(color='#00ff88', width=2)))
+                fig.update_layout(
+                    margin=dict(l=0, r=0, t=0, b=0),
+                    height=60, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+                    xaxis=dict(visible=False), yaxis=dict(visible=False),
+                    showlegend=False
+                )
+                grafico_html = fig.to_html(full_html=False, include_plotlyjs=False)
+            cards += f"<div class='card' style='padding-bottom: 5px;'><h2>{nome}</h2><p>Último valor: {ultimo}</p>{grafico_html}</div>"
         except Exception:
             cards += f"<div class='card'><h2>{nome}</h2><p>Último valor: Indisponível</p></div>"
     return f"""
@@ -201,12 +212,12 @@ def gerar_home_html():
         <meta charset="UTF-8">
         <title>InvestSmart - Painel</title>
         <link rel="stylesheet" href="/static/style.css">
+        <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     </head>
     <body>
         <header>
             <h1>InvestSmart</h1>
             <nav>
-                <a href="/carteira">Carteira</a>
                 <a href="/carteira">Carteira</a>
                 <a href="/consultas">Nova Consulta</a>
                 <a href="/logout">Sair</a>
