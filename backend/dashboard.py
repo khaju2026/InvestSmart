@@ -13,6 +13,16 @@ TICKERS_BR = {
     "ITUB4": "ITUB4.SA"
 }
 
+# Mapeamento para nomes amigáveis
+TICKER_TO_NAME = {
+    "^BVSP": "IBOV",
+    "USDBRL=X": "Dólar",
+    "^GSPC": "S&P500",
+    "PETR4.SA": "PETR4",
+    "VALE3.SA": "VALE3",
+    "ITUB4.SA": "ITUB4"
+}
+
 def obter_dados_mercado(ativo, periodo="30d"):
     hoje = datetime.date.today()
     if periodo == "7d":
@@ -84,7 +94,8 @@ def exportar_excel(dados, ativo):
 
 def gerar_dashboard_html(ativo, periodo="30d"):
     dados = obter_dados_mercado(ativo, periodo)
-    grafico_html = gerar_grafico_interativo(dados, f"Ativo: {ativo} – Período {periodo}")
+    nome_amigavel = TICKER_TO_NAME.get(ativo, ativo)
+    grafico_html = gerar_grafico_interativo(dados, f"Ativo: {nome_amigavel} – Período {periodo}")
     pdf_link = exportar_pdf(dados, ativo)
     excel_link = exportar_excel(dados, ativo)
     noticias = buscar_noticias_financeiras(ativo)
@@ -128,18 +139,25 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
     dados_combinados = {}
     for ativo in ativos:
         try:
-            dados_combinados[ativo] = obter_dados_mercado(ativo, periodo)
+            dados = obter_dados_mercado(ativo, periodo)
+            if not dados.empty:
+                dados_combinados[ativo] = dados
         except:
             pass
 
     fig = go.Figure()
     for ativo, dados in dados_combinados.items():
-        fig.add_trace(go.Scatter(x=dados.index, y=dados['Close'], mode="lines", name=ativo))
+        nome_amigavel = TICKER_TO_NAME.get(ativo, ativo)
+        primeiro_valor = dados['Close'].iloc[0]
+        if primeiro_valor > 0:
+            # Normalizar para base 100 para comparação justa
+            dados_normalizados = (dados['Close'] / primeiro_valor) * 100
+            fig.add_trace(go.Scatter(x=dados.index, y=dados_normalizados, mode="lines", name=nome_amigavel))
     
     fig.update_layout(
-        title="Comparativo de Ativos",
+        title="Comparativo de Ativos (Variação Percentual - Base 100)",
         xaxis_title="Data",
-        yaxis_title="Preço",
+        yaxis_title="Preço Relativo (Base 100)",
         template="plotly_dark",
         height=400
     )

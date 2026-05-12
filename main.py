@@ -230,6 +230,30 @@ def investir_post(request: Request, ativo: str = Form(...), quantidade: int = Fo
     finally:
         db.close()
 
+@app.post("/adicionar_saldo", response_class=HTMLResponse)
+def adicionar_saldo_post(request: Request, valor: float = Form(...)):
+    if not verificar_login(request):
+        return RedirectResponse(url="/login", status_code=303)
+        
+    db = SessionLocal()
+    try:
+        from backend.models import Investimento
+        usuario_id = request.session["usuario_id"]
+        
+        # Locate the cash balance
+        caixa = db.query(Investimento).filter(Investimento.nome == "SALDO_EM_CAIXA", Investimento.usuario_id == usuario_id).first()
+        if not caixa:
+            caixa = Investimento(nome="SALDO_EM_CAIXA", valor=0.0, usuario_id=usuario_id)
+            db.add(caixa)
+            
+        if valor > 0:
+            caixa.valor += valor
+            db.commit()
+            
+        return RedirectResponse(url="/carteira", status_code=303)
+    finally:
+        db.close()
+
 @app.get("/consultas", response_class=HTMLResponse)
 def consultas(request: Request):
     if not verificar_login(request):
@@ -274,6 +298,11 @@ def consultas(request: Request):
                 <div class="checkbox-group">
                     {ativos_html}
                 </div>
+                <div style="margin-top: 1rem; text-align: left;">
+                    <label>Ou digite um ativo livremente (ex: AAPL, MGLU3.SA):
+                        <input type="text" name="ativos_custom" placeholder="Qualquer ativo do Yahoo Finance" style="width:100%; margin-top:0.5rem; padding: 0.5rem;">
+                    </label>
+                </div>
                 <label>Período:
                     <select name="periodo" style="max-width: 200px; margin: 0 auto;">
                         <option value="7d">7 dias</option>
@@ -290,9 +319,14 @@ def consultas(request: Request):
     return HTMLResponse(content=page)
 
 @app.get("/dashboard/all", response_class=HTMLResponse)
-def dashboard_all(request: Request, ativos: list[str] = Query(default=[]), periodo: str = Query(default="30d")):
+def dashboard_all(request: Request, ativos: list[str] = Query(default=[]), ativos_custom: str = Query(default=""), periodo: str = Query(default="30d")):
     if not verificar_login(request):
         return RedirectResponse(url="/login", status_code=303)
+        
+    if ativos_custom:
+        custom_list = [t.strip().upper() for t in ativos_custom.split(",") if t.strip()]
+        ativos.extend(custom_list)
+        
     if not ativos:
         return HTMLResponse("<h1>Nenhum ativo selecionado</h1><a href='/consultas'>Voltar</a>")
     
