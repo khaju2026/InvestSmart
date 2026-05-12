@@ -13,7 +13,11 @@
         .card h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
         .card p, .card label { font-size: 0.95rem; }
         .card-grid { margin-top: 1rem !important; gap: 1rem; }
-        h2 { margin-bottom: 0.5rem; }
+        .summary-grid { display: flex; gap: 0.5rem; justify-content: space-between; overflow-x: auto; }
+        .summary-grid .card { flex: 1; padding: 0.8rem; text-align: center; min-width: 100px; }
+        .summary-grid h3 { font-size: 0.85rem; }
+        .summary-grid p { font-size: 1.1rem !important; margin: 0; }
+        h2 { margin-bottom: 0.5rem; font-size: 1.3rem; }
         form { gap: 0.5rem !important; }
     </style>
 </head>
@@ -33,18 +37,18 @@
         
         {error_alert}
         
-        <div class="card-grid">
+        <div class="summary-grid">
             <div class="card">
                 <h3>Total Investido</h3>
-                <p style="font-size: 1.5rem; color: var(--text-color);">{total_investido}</p>
+                <p style="color: var(--text-color);">{total_investido}</p>
             </div>
             <div class="card">
                 <h3>Saldo Atual</h3>
-                <p style="font-size: 1.5rem; color: var(--primary-color);">{saldo_atual}</p>
+                <p style="color: var(--primary-color);">{saldo_atual}</p>
             </div>
             <div class="card">
                 <h3>Rentabilidade</h3>
-                <p style="font-size: 1.5rem; color: var(--success-color);">{rentabilidade}</p>
+                <p style="color: var(--success-color);">{rentabilidade}</p>
             </div>
         </div>
 
