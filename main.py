@@ -280,7 +280,7 @@ def consultas(request: Request):
     </script>
     </head><body>
     <header>
-        <h1>InvestSmart</h1>
+        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/logout">Sair</a>
@@ -289,7 +289,7 @@ def consultas(request: Request):
     <main class="container">
         <h2>Consultas Financeiras</h2>
         <div class="card" style="text-align: center;">
-            <img src="/static/logo.png" class="logo" alt="InvestSmart Logo">
+            <img src="/static/logo.png" class="logo logo-large" alt="InvestSmart Logo">
             <form action="/dashboard/all" method="get">
                 <div style="margin-bottom: 1rem;">
                     <button type="button" class="btn secondary" onclick="marcarTodos()">Marcar Todos</button>

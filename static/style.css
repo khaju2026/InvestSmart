@@ -323,19 +323,47 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
     header {
-        padding: 0 2rem;
+        padding: 0 1rem;
     }
     
     main.container {
-        padding: 2rem 1.5rem;
+        padding: 1rem;
     }
     
     .card {
-        padding: 2rem;
-        border-radius: 20px;
+        padding: 1.2rem;
+        border-radius: 16px;
     }
     
     header h1 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
+    
+    .summary-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .summary-grid .card {
+        min-width: 45%;
+        padding: 0.8rem;
+    }
+}
+
+/* Carteira specific styles */
+.summary-grid { display: flex; gap: 0.5rem; justify-content: space-between; overflow-x: auto; margin-bottom: 1rem;}
+.summary-grid .card { flex: 1; padding: 1rem; text-align: center; min-width: 100px; margin-bottom: 0;}
+.summary-grid h3 { font-size: 0.9rem; margin-bottom: 0.5rem;}
+.summary-grid p { font-size: 1.2rem !important; margin: 0; }
+
+.logo-header {
+    height: 40px;
+    width: auto;
+    margin-right: 15px;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+    border-radius: 8px;
+}
+.logo-large {
+    height: 140px !important;
 }

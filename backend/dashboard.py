@@ -108,7 +108,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
     </head>
     <body>
     <header>
-        <h1>InvestSmart</h1>
+        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -172,7 +172,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
     </head>
     <body>
     <header>
-        <h1>InvestSmart</h1>
+        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -234,7 +234,7 @@ def gerar_home_html():
     </head>
     <body>
         <header>
-            <h1>InvestSmart</h1>
+            <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
             <nav>
                 <a href="/carteira">Carteira</a>
                 <a href="/consultas">Nova Consulta</a>
