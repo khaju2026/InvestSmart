@@ -34,7 +34,7 @@ def login_page(request: Request):
     <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/static/style.css?v=2">
+        <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
     <div class="card login-card" style="margin-top: 100px; text-align: center;">
@@ -60,7 +60,7 @@ def register_page(request: Request):
     <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/static/style.css?v=2">
+        <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
     <div class="card login-card" style="margin-top: 100px; text-align: center;">
@@ -267,7 +267,7 @@ def consultas(request: Request):
     page = f"""
     <html><head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=3">
     <script>
     function marcarTodos() {{
         var checkboxes = document.querySelectorAll('.ativo');
@@ -280,7 +280,7 @@ def consultas(request: Request):
     </script>
     </head><body>
     <header>
-        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
+        <h1>InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/logout">Sair</a>
@@ -289,7 +289,7 @@ def consultas(request: Request):
     <main class="container">
         <h2>Consultas Financeiras</h2>
         <div class="card" style="text-align: center;">
-            <img src="/static/logo.png" class="logo logo-large" alt="InvestSmart Logo">
+            <img src="/static/logo.png" alt="InvestSmart Logo" style="height: 110px; max-width: 80%; border-radius: 12px; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));">
             <form action="/dashboard/all" method="get">
                 <div style="margin-bottom: 1rem;">
                     <button type="button" class="btn secondary" onclick="marcarTodos()">Marcar Todos</button>

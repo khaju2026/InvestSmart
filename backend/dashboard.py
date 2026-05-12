@@ -104,11 +104,11 @@ def gerar_dashboard_html(ativo, periodo="30d"):
     <head>
         <meta charset="UTF-8">
         <title>Dashboard – InvestSmart</title>
-        <link rel="stylesheet" href="/static/style.css?v=2">
+        <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
     <header>
-        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
+        <h1>InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -168,11 +168,11 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
     <head>
         <meta charset="UTF-8">
         <title>Dashboard Comparativo – InvestSmart</title>
-        <link rel="stylesheet" href="/static/style.css?v=2">
+        <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
     <header>
-        <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
+        <h1>InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -229,12 +229,12 @@ def gerar_home_html():
     <head>
         <meta charset="UTF-8">
         <title>InvestSmart - Painel</title>
-        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/style.css?v=3">
         <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     </head>
     <body>
         <header>
-            <h1><img src="/static/logo.png" class="logo-header" alt="Logo"> InvestSmart</h1>
+            <h1>InvestSmart</h1>
             <nav>
                 <a href="/carteira">Carteira</a>
                 <a href="/consultas">Nova Consulta</a>
@@ -243,6 +243,9 @@ def gerar_home_html():
         </header>
 
         <main class="container">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="/static/logo.png" alt="InvestSmart Logo" style="height: 100px; border-radius: 16px; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));">
+            </div>
             <h2>Visão Geral do Mercado (7 dias)</h2>
             <div class="card-grid">
                 {cards}
