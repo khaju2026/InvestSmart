@@ -107,9 +107,9 @@ def gerar_dashboard_html(ativo, periodo="30d"):
         <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
-    <header style="position: relative; justify-content: flex-end;">
-        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
-            <img src="/static/logo.png" alt="Logo" style="height: 65px; border-radius: 6px;">
+    <header style="position: relative; justify-content: flex-end; align-items: center;">
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <img src="/static/logo.png" alt="Logo" style="height: 130px; border-radius: 6px;">
         </div>
         <nav>
             <a href="/home">Home</a>
@@ -184,9 +184,9 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         <link rel="stylesheet" href="/static/style.css?v=3">
     </head>
     <body>
-    <header style="position: relative; justify-content: flex-end;">
-        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
-            <img src="/static/logo.png" alt="Logo" style="height: 65px; border-radius: 6px;">
+    <header style="position: relative; justify-content: flex-end; align-items: center;">
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <img src="/static/logo.png" alt="Logo" style="height: 130px; border-radius: 6px;">
         </div>
         <nav>
             <a href="/home">Home</a>
@@ -246,9 +246,9 @@ def gerar_home_html():
         <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     </head>
     <body>
-        <header style="position: relative; justify-content: flex-end;">
-            <div style="position: absolute; left: 50%; transform: translateX(-50%);">
-                <img src="/static/logo.png" alt="Logo" style="height: 65px; border-radius: 6px;">
+        <header style="position: relative; justify-content: flex-end; align-items: center;">
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                <img src="/static/logo.png" alt="Logo" style="height: 130px; border-radius: 6px;">
             </div>
             <nav>
                 <a href="/carteira">Carteira</a>
