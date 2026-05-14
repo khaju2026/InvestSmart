@@ -279,8 +279,10 @@ def consultas(request: Request):
     }}
     </script>
     </head><body>
-    <header>
-        <h1><img src="/static/logo.png" alt="Logo" style="height: 45px; vertical-align: middle; border-radius: 4px;"></h1>
+    <header style="position: relative; justify-content: flex-end;">
+        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+            <img src="/static/logo.png" alt="Logo" style="height: 65px; border-radius: 6px;">
+        </div>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
