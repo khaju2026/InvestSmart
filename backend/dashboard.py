@@ -128,9 +128,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
         </div>
     </main>
 
-    <footer>
-        <div class="noticias">📰 Últimas Notícias</div>
-    </footer>
+    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
     </body>
     </html>
     """
@@ -201,9 +199,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         </div>
     </main>
 
-    <footer>
-        <div class="noticias">📰 Últimas Notícias</div>
-    </footer>
+    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
     </body>
     </html>
     """
@@ -256,9 +252,6 @@ def gerar_home_html():
         </header>
 
         <main class="container">
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <img src="/static/logo.png" alt="InvestSmart Logo" style="height: 100px; border-radius: 16px; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));">
-            </div>
             <h2>Visão Geral do Mercado (7 dias)</h2>
             <div class="card-grid">
                 {cards}

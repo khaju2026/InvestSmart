@@ -283,13 +283,13 @@ def consultas(request: Request):
         <h1><img src="/static/logo.png" alt="Logo" style="height: 32px; margin-right: 8px; vertical-align: middle; border-radius: 4px;">InvestSmart</h1>
         <nav>
             <a href="/home">Home</a>
+            <a href="/carteira">Carteira</a>
             <a href="/logout">Sair</a>
         </nav>
     </header>
     <main class="container">
         <h2>Consultas Financeiras</h2>
         <div class="card" style="text-align: center;">
-            <img src="/static/logo.png" alt="InvestSmart Logo" style="height: 110px; max-width: 80%; border-radius: 12px; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));">
             <form action="/dashboard/all" method="get">
                 <div style="margin-bottom: 1rem;">
                     <button type="button" class="btn secondary" onclick="marcarTodos()">Marcar Todos</button>
@@ -314,6 +314,7 @@ def consultas(request: Request):
             </form>
         </div>
     </main>
+    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
     </body></html>
     """
     return HTMLResponse(content=page)
