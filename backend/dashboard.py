@@ -145,21 +145,34 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         except:
             pass
 
+    nomes_exibidos = []
     fig = go.Figure()
     for ativo, dados in dados_combinados.items():
         nome_amigavel = TICKER_TO_NAME.get(ativo, ativo)
+        nomes_exibidos.append(nome_amigavel)
         primeiro_valor = dados['Close'].iloc[0]
         if primeiro_valor > 0:
             # Normalizar para base 100 para comparação justa
             dados_normalizados = (dados['Close'] / primeiro_valor) * 100
             fig.add_trace(go.Scatter(x=dados.index, y=dados_normalizados, mode="lines", name=nome_amigavel))
     
+    nomes_str = ", ".join(nomes_exibidos)
+    if not nomes_str:
+        nomes_str = "Nenhum ativo"
+
     fig.update_layout(
-        title="Comparativo de Ativos (Variação Percentual - Base 100)",
+        title="Variação Percentual (Base 100)",
         xaxis_title="Data",
         yaxis_title="Preço Relativo (Base 100)",
         template="plotly_dark",
-        height=400
+        height=450,
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.2,
+            xanchor="center",
+            x=0.5
+        )
     )
     grafico_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
 
@@ -182,7 +195,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
     </header>
 
     <main class="container">
-        <h2>Comparativo de Ativos selecionados</h2>
+        <h2>Exibindo: {nomes_str}</h2>
         <div class="card" style="max-width: 900px;">
             {grafico_html}
         </div>
