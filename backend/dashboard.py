@@ -108,7 +108,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
     </head>
     <body>
     <header>
-        <h1><img src="/static/logo.png" alt="Logo" style="height: 32px; margin-right: 8px; vertical-align: middle; border-radius: 4px;">InvestSmart</h1>
+        <h1><img src="/static/logo.png" alt="Logo" style="height: 45px; vertical-align: middle; border-radius: 4px;"></h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -128,7 +128,7 @@ def gerar_dashboard_html(ativo, periodo="30d"):
         </div>
     </main>
 
-    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
+    <footer>© 2026 – Seu painel financeiro inteligente</footer>
     </body>
     </html>
     """
@@ -183,7 +183,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
     </head>
     <body>
     <header>
-        <h1><img src="/static/logo.png" alt="Logo" style="height: 32px; margin-right: 8px; vertical-align: middle; border-radius: 4px;">InvestSmart</h1>
+        <h1><img src="/static/logo.png" alt="Logo" style="height: 45px; vertical-align: middle; border-radius: 4px;"></h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -199,7 +199,7 @@ def gerar_dashboard_todos(ativos, periodo="30d"):
         </div>
     </main>
 
-    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
+    <footer>© 2026 – Seu painel financeiro inteligente</footer>
     </body>
     </html>
     """
@@ -243,7 +243,7 @@ def gerar_home_html():
     </head>
     <body>
         <header>
-            <h1><img src="/static/logo.png" alt="Logo" style="height: 32px; margin-right: 8px; vertical-align: middle; border-radius: 4px;">InvestSmart</h1>
+            <h1><img src="/static/logo.png" alt="Logo" style="height: 45px; vertical-align: middle; border-radius: 4px;"></h1>
             <nav>
                 <a href="/carteira">Carteira</a>
                 <a href="/consultas">Nova Consulta</a>
@@ -260,7 +260,7 @@ def gerar_home_html():
             <a href="/consultas" class="btn">Realizar Nova Consulta</a>
         </main>
 
-        <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
+        <footer>© 2026 – Seu painel financeiro inteligente</footer>
     </body>
     </html>
     """

@@ -280,7 +280,7 @@ def consultas(request: Request):
     </script>
     </head><body>
     <header>
-        <h1><img src="/static/logo.png" alt="Logo" style="height: 32px; margin-right: 8px; vertical-align: middle; border-radius: 4px;">InvestSmart</h1>
+        <h1><img src="/static/logo.png" alt="Logo" style="height: 45px; vertical-align: middle; border-radius: 4px;"></h1>
         <nav>
             <a href="/home">Home</a>
             <a href="/carteira">Carteira</a>
@@ -314,7 +314,7 @@ def consultas(request: Request):
             </form>
         </div>
     </main>
-    <footer>InvestSmart © 2026 – Seu painel financeiro inteligente</footer>
+    <footer>© 2026 – Seu painel financeiro inteligente</footer>
     </body></html>
     """
     return HTMLResponse(content=page)
